@@ -1,7 +1,7 @@
 import type { Subject } from "rxjs";
 import songs from "./songs";
 import PianoKey from "./Components/PianoKeyC";
-import "../Piano.css";
+import "./Piano.css";
 export default function Piano({subject}:{subject: Subject<string>})
 {
     return songs.map((song) => {
