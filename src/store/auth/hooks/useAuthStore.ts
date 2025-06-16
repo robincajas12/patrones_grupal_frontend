@@ -1,6 +1,7 @@
 import { create } from "zustand";
+
 import type { User } from "../interfaces/User"
-import { SignupFormData } from '../interfaces/signup-form-data.interface';
+import { type SignupFormData } from '../interfaces/signup-form-data.interface';
 
 type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated'
 
