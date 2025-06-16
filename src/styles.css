@@ -60,9 +60,26 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  opacity: 0.9;
+}
+
 .auth-buttons {
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
   gap: 10px;
+}
+
+.auth-footer {
+  margin-top: 1rem;
+}
+
+.auth-footer:hover {
+  text-decoration: underline;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }

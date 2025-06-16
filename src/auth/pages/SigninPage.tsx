@@ -13,6 +13,10 @@ export const SigninPage = () => {
             <button type="button" className="auth-button auth-button--google">Google</button>
           </div>
         </form>
+
+        <div className="auth-footer">
+          <a href="/auth/signup">Dont have an account</a>
+        </div>
       </div>
     </AuthLayout>
   )
