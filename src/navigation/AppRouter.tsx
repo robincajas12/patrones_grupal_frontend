@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { useAuthStore } from "../store/auth/hooks/useAuthStore"
 import { AuthRoutes } from "../auth/routes/AuthRoutes"
 import { useEffect } from "react"
@@ -6,10 +6,10 @@ import { useEffect } from "react"
 export const AppRouter = () => {
 
   const status = useAuthStore(( state ) => state.status)
-  const checkStatus = useAuthStore(( state ) => state.changeStatus)
+  const changeStatus = useAuthStore(( state ) => state.changeStatus)
 
   useEffect(() => {
-    checkStatus()
+    changeStatus()
   }, [])
   
   
@@ -20,10 +20,12 @@ export const AppRouter = () => {
   return (
     <Routes>
       {
-        status === 'authenticated'
+        (status === 'authenticated')
         ? <Route path="/*" element={ <div>Authenticated Content</div> } />
         : <Route path="/auth/*" element={ <AuthRoutes /> } />
       }
+
+      <Route path="/*" element={ <Navigate to={"/auth/signin"} /> } />
     </Routes>
   )
 }
