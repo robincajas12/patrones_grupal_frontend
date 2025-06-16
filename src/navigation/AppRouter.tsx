@@ -1,5 +1,6 @@
-import { Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import { useAuthStore } from "../store/auth/hooks/useAuthStore"
+import { AuthRoutes } from "../auth/routes/AuthRoutes"
 
 export const AppRouter = () => {
 
@@ -11,9 +12,11 @@ export const AppRouter = () => {
 
   return (
     <Routes>
-      {/* {
-        status === 'authenticated' ? 
-      } */}
+      {
+        status === 'authenticated'
+        ? <Route path="/*" element={ <div>Authenticated Content</div> } />
+        : <Route path="/auth/*" element={ <AuthRoutes /> } />
+      }
     </Routes>
   )
 }
