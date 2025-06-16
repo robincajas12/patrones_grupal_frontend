@@ -18,7 +18,7 @@ interface AuthState {
 
   changeStatus: () => Promise<boolean>
 
-  currentUser: (user: User) => Promise<void>
+  currentUser: (user?: User) => Promise<void>
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
@@ -39,12 +39,16 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ status: 'unauthenticated', user: null })
   },
   changeStatus: async () => {
-    const currentStatus = get().status;
-    set({ status: currentStatus === 'checking' ? 'unauthenticated' : 'checking' });
+    await get().currentUser()
     return true;
   }
   ,
-  currentUser: async (user: User) => {
+  currentUser: async (user?: User) => {
+    if(!user) {
+      set({ user: null, status: 'unauthenticated' });
+      return;
+    }
+
     set({ user, status: 'authenticated' });
     return;
   }
