@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 import { AuthLayout } from "../layout/AuthLayout"
 
 export const SigninPage = () => {
@@ -15,7 +17,7 @@ export const SigninPage = () => {
         </form>
 
         <div className="auth-footer">
-          <a href="/auth/signup">Dont have an account</a>
+          <Link to="/auth/signup">Dont have an account</Link>
         </div>
       </div>
     </AuthLayout>
