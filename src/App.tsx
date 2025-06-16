@@ -1,14 +1,13 @@
 import { useMemo } from 'react'
 import './App.css'
-import Piano from './Piano/Piano'
+import Piano from "./Piano/Piano"
 import { Subject } from 'rxjs'
 import { convertSharpToFlat, type PianoNote } from './Piano/songs';
 
 
 function App() {
   const subject = useMemo(() => new Subject<string>(), []);
-
-const song: PianoNote[] = [
+  const song: PianoNote[] = [
   // Intro - Atmosphere
   { note: ["C4", "E4", "G4"], duration: 1.5 },
   { note: ["D4", "F4", "A4"], duration: 1 },
