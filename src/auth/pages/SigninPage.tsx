@@ -17,7 +17,7 @@ export const SigninPage = () => {
         </form>
 
         <div className="auth-footer">
-          <Link to="/auth/signup">Dont have an account</Link>
+          <Link className="auth-footer-link" to="/auth/signup">Dont have an account</Link>
         </div>
       </div>
     </AuthLayout>

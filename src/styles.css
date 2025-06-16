@@ -79,7 +79,7 @@ button:hover {
   text-decoration: underline;
 }
 
-a {
+.auth-footer-link {
   color: black;
   text-decoration: none;
 }
