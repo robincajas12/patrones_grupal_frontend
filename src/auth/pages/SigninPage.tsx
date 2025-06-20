@@ -4,20 +4,20 @@ import { AuthLayout } from "../layout/AuthLayout"
 
 export const SigninPage = () => {
   return (
-    <AuthLayout title="Signin">
+    <AuthLayout title="Iniciar Sesion">
       <div className="auth-container">
         <form className="auth-form">
-          <input type="email" id="email" name="email" placeholder="email" required />
-          <input type="password" id="password" name="password" placeholder="password" required />
-          
+          <input type="email" id="email" name="email" placeholder="Correo Electronico" required />
+          <input type="password" id="password" name="password" placeholder="Contraseña" required />
+
           <div className="auth-buttons">
-            <button type="submit">Sign In</button>
-            <button type="button" className="auth-button auth-button--google">Google</button>
+            <button type="submit">INICIAR SESION</button>
+            <button type="button">GOOGLE</button>
           </div>
         </form>
 
         <div className="auth-footer">
-          <Link className="auth-footer-link" to="/auth/signup">Dont have an account</Link>
+          <Link className="auth-footer-link" to="/auth/signup">¿No tienes una cuenta? Regístrate</Link>
         </div>
       </div>
     </AuthLayout>

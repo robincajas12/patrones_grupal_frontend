@@ -12,7 +12,7 @@ export const SignupPage = () => {
           <input type="password" id="password" name="password" placeholder="Contraseña" required />
 
           <div className="auth-buttons">
-            <button type="submit">Crear Cuenta</button>
+            <button type="submit">REGISTRAR</button>
           </div>
         </form>
 
