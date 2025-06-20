@@ -13,6 +13,8 @@ export const useForm = <T>(initialValues: T) => {
 
   return {
     initialState,
+    ...initialState, 
+    
     onFormChange,
   }
 }
