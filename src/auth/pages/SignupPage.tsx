@@ -4,20 +4,20 @@ import { AuthLayout } from "../layout/AuthLayout"
 
 export const SignupPage = () => {
   return (
-    <AuthLayout title="Signup">
+    <AuthLayout title="Crear cuenta">
       <div className="auth-container">
         <form className="auth-form">
-          <input type="text" id="name" name="name" placeholder="name" required />
-          <input type="email" id="email" name="email" placeholder="email" required />
-          <input type="password" id="password" name="password" placeholder="password" required />
-          
+          <input type="text" id="name" name="name" placeholder="Nombre" required />
+          <input type="email" id="email" name="email" placeholder="Correo Electronico" required />
+          <input type="password" id="password" name="password" placeholder="Contraseña" required />
+
           <div className="auth-buttons">
-            <button type="submit">Create Account</button>
+            <button type="submit">Crear Cuenta</button>
           </div>
         </form>
 
         <div className="auth-footer">
-          <Link className="auth-footer-link" to="/auth/signin">Already have an account? Sign in</Link>
+          <Link className="auth-footer-link" to="/auth/signin">¿Ya tienes una cuenta? Iniciar sesión</Link>
         </div>
       </div>
     </AuthLayout>
