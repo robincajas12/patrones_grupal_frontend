@@ -11,8 +11,8 @@ export const SigninPage = () => {
     <AuthLayout title="Iniciar Sesion">
       <div className="auth-container">
         <form className="auth-form">
-          <input type="email" onChange={ onFormChange } value={ initialState.email } id="email" name="email" placeholder="Correo Electronico" required />
-          <input type="password" onChange={ onFormChange } value={ initialState.password } id="password" name="password" placeholder="Contraseña" required />
+          <input autoComplete="email" type="email" onChange={ onFormChange } value={ initialState.email } id="email" name="email" placeholder="Correo Electronico" required />
+          <input autoComplete="current-password" type="password" onChange={ onFormChange } value={ initialState.password } id="password" name="password" placeholder="Contraseña" required />
 
           <div className="auth-buttons">
             <button type="submit">INICIAR SESION</button>
