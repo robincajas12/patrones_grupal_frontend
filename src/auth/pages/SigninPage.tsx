@@ -5,7 +5,7 @@ import { useForm } from "../hooks/useForm"
 
 export const SigninPage = () => {
 
-  const { initialState, onFormChange } = useForm({ email: 'hooa', password: '' })
+  const { initialState, onFormChange } = useForm({ email: '', password: '' })
 
   return (
     <AuthLayout title="Iniciar Sesion">
