@@ -8,7 +8,8 @@ import { PianoApp } from './PianoApp.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <PianoApp />
+      {/*<PianoApp />*/}
+      <App></App>
     </BrowserRouter>
   </StrictMode>,
 )

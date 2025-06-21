@@ -14,12 +14,12 @@ const songs = Object.entries(url).map(([note, url]) => {
 
 export function convertSharpToFlat(notes: PianoNote[]): PianoNote[] {
   return notes.map(pn => ({
-    note: pn.note.map(n => n.replace("#", "b")),
+    notes: pn.notes.map(n => n.replace("#", "b")),
     duration: pn.duration
   }));
 }
 export type PianoNote = {
-  note: string[];      // notas simultáneas (ej. ["C4"], ["C4", "E4", "G4"])
+  notes: string[];      // notas simultáneas (ej. ["C4"], ["C4", "E4", "G4"])
   duration: number;    // duración en segundos (ej. 0.5, 1)
 }
 const order = [

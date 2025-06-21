@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import Piano from "./Piano/Piano"
 import { Subject } from 'rxjs'
@@ -7,39 +7,42 @@ import { convertSharpToFlat, type PianoNote } from './Piano/songs';
 
 function App() {
   const subject = useMemo(() => new Subject<string>(), []);
-  const song: PianoNote[] = [
-  // Intro - Atmosphere
-  { note: ["C4", "E4", "G4"], duration: 1.5 },
-  { note: ["D4", "F4", "A4"], duration: 1 },
-  { note: ["E4", "G4", "B4"], duration: 1 },
+    const [song, setSong] = useState<PianoNote[] | null>(null);
 
-  // Main motif
-  { note: ["G4"], duration: 0.5 },
-  { note: ["F4"], duration: 0.5 },
-  { note: ["E4"], duration: 0.75 },
-  { note: ["D4"], duration: 0.75 },
-  { note: ["C4"], duration: 1.5 },
+  useEffect(() => {
+    async function fetchSong() {
+      try {
+        const res = await fetch("/api/create/song", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: "beethoven song" }),
+        });
+        const data: PianoNote[] = await res.json();
+        setSong(data);
+      } catch (error) {
+        console.error("Error fetching song:", error);
+      }
+    }
 
-  // Harmony chords
-  { note: ["F4", "A4", "C5"], duration: 1 },
-  { note: ["E4", "G4", "B4"], duration: 1 },
-  { note: ["D4", "F4", "A4"], duration: 1 },
+    fetchSong();
+  }, []); // Se ejecuta solo una vez al montar el componente
 
-  // Closing phrase
-  { note: ["C4", "E4", "G4"], duration: 2 },
-];
+  if (!song) {
+    return <div>Cargando canción...</div>;
+  }
 
-  async function playEstrellita() {
-    for (const entry of convertSharpToFlat(song)) {
-        for (const n of entry.note) subject.next(n);
+
+  async function playEstrellita(data : PianoNote[]) {
+    for (const entry of convertSharpToFlat(data)) {
+        for (const n of entry.notes) subject.next(n);
       
-      await new Promise(resolve => setTimeout(resolve, entry.duration * 1000));
+      await new Promise(resolve => setTimeout(resolve, (entry.duration ? entry.duration : 1) * 1000));
     }
   }
 
   return (
     <div onClick={() => subject.next("")} className="App">
-      <div className='btn' onClick={playEstrellita}>play</div>
+      <div className='btn' onClick={()=>playEstrellita(song)}>play</div>
       <div className='PianoContainer'>
         <Piano subject={subject}></Piano>
       </div>
