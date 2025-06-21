@@ -25,7 +25,7 @@ function App() {
     }
 
     fetchSong();
-  }, []); // Se ejecuta solo una vez al montar el componente
+  }, []); 
 
   if (!song) {
     return <div>Cargando canción...</div>;
