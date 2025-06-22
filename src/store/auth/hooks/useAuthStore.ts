@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { User } from "../interfaces/User"
+import type { User } from "../interfaces/user.interface"
 import { type SignupFormData } from '../interfaces/signup-form-data.interface';
 
 type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated'
@@ -32,7 +32,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   socialSignin: async (user: User) => {
     await get().currentUser(user)
 
-    if( !user) {
+    if(!user) {
       await get().currentUser()
       return false
     }

@@ -13,8 +13,12 @@ export const useSocialConnections = () => {
           scope: "openid profile email",
         }
       })
+
+      return true
     } catch (error) {
       console.error("Error starting Google connection:", error)
+
+      return false
     }
   }
 
