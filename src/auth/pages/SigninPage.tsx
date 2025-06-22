@@ -2,10 +2,13 @@ import { Link } from "react-router-dom"
 
 import { AuthLayout } from "../layout/AuthLayout"
 import { useForm } from "../hooks/useForm"
+import { useSocialConnections } from "../hooks/useSocialConnections"
 
 export const SigninPage = () => {
 
   const { initialState, onFormChange } = useForm({ email: '', password: '' })
+  
+  const { startGoogleConnection } = useSocialConnections()
 
   return (
     <AuthLayout title="Iniciar Sesion">
@@ -15,8 +18,8 @@ export const SigninPage = () => {
           <input autoComplete="current-password" type="password" onChange={ onFormChange } value={ initialState.password } id="password" name="password" placeholder="Contraseña" required />
 
           <div className="auth-buttons">
-            <button type="submit">INICIAR SESION</button>
-            <button type="button">GOOGLE</button>
+            <button onClick={ () => {}} type="submit">INICIAR SESION</button>
+            <button onClick={ () => startGoogleConnection()} type="button">GOOGLE</button>
           </div>
         </form>
 
