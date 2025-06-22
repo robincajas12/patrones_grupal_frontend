@@ -4,12 +4,15 @@ import './styles.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { PianoApp } from './PianoApp.tsx'
+import { Auth0Provider } from '@auth0/auth0-react'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      {/*<PianoApp />*/}
-      <App></App>
-    </BrowserRouter>
+    <Auth0Provider clientId="" domain="">
+      <BrowserRouter>
+        {/*<PianoApp />*/}
+        <App></App>
+      </BrowserRouter>
+    </Auth0Provider>
   </StrictMode>,
 )
