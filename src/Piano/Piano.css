@@ -1,3 +1,11 @@
+.Piano{
+    display: flex;
+    width: 1040px;
+    transform: scale(1.21);
+     transform: scaleX(200%);
+
+    
+}
 .btn {
   position: absolute;
   width: 50px;
@@ -22,12 +30,12 @@
   background: white;
   position: relative;
   width: 0.5rem;
-  height: 5rem;
+  height: 30vh;
   display:flexbox
 }
 .black {
   background: rgb(49, 49, 49);
-  height: 30px;
+  height: 15vh;
   width:15px;
   position: absolute;
 }

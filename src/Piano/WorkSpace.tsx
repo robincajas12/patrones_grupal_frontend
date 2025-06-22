@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import './App.css'
-import Piano from "./Piano/Piano"
-import { Subject } from 'rxjs'
-import { convertSharpToFlat, type PianoNote } from './Piano/songs';
-import WorkSpace from './Piano/WorkSpace';
-
-
-function App() {
- /* const subject = useMemo(() => new Subject<string>(), []);
+import { useEffect, useMemo, useState } from "react";
+import Piano from "./Piano";
+import "./WorkSpace.css";
+import { Subject } from "rxjs";
+import { type PianoNote, convertSharpToFlat } from "./songs";
+export default function WorkSpace()
+{
+    const subject = useMemo(() => new Subject<string>(), []);
     const [song, setSong] = useState<PianoNote[] | null>(null);
 
   useEffect(() => {
@@ -28,9 +26,6 @@ function App() {
     fetchSong();
   }, []); 
 
-  if (!song) {
-    return <div>Cargando canción...</div>;
-  }
 
 
   async function playEstrellita(data : PianoNote[]) {
@@ -40,16 +35,16 @@ function App() {
       await new Promise(resolve => setTimeout(resolve, (entry.duration ? entry.duration : 1) * 1000));
     }
   }
-  return (
-    <div onClick={() => subject.next("")} className="App">
-      <div className='btn' onClick={()=>playEstrellita(song)}>play</div>
-      <div className='PianoContainer'>
-        <Piano subject={subject}></Piano>
-      </div>
+    return <div className="WorkSpace">
+        <div id="explorer">
+            <div>explorer</div>
+        </div>
+        <div id="chat">
+            <button onClick={()=>song && playEstrellita(song)}>play</button>
+            
+        </div>
+        <div id="piano">
+            <div><Piano subject={subject}></Piano></div>
+        </div>
     </div>
-  );*/
-  return  <WorkSpace></WorkSpace>
-  
 }
-
-export default App

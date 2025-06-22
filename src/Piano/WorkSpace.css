@@ -1,0 +1,37 @@
+.WorkSpace{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "explorer chat chat chat"
+    "explorer chat chat chat"
+    "piano piano piano piano";
+    width: 95vw;
+    height: 90vh;
+    padding: 10px;
+
+}
+#explorer
+{
+    grid-area: explorer;
+}
+#chat
+{
+     grid-area: chat;
+}
+#piano
+{
+    grid-area: piano;
+    width: 95vw;
+    height: auto;
+    overflow:auto;
+    overflow-y: hidden;
+    position: relative;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#piano::-webkit-scrollbar
+{
+    display: none;
+}
