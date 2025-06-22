@@ -8,7 +8,13 @@ import { Auth0Provider } from '@auth0/auth0-react'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Auth0Provider clientId={ import.meta.env.VITE_AUTH0_DOMAIN } domain={import.meta.env.VITE_AUTH0_CLIENT_ID }>
+    <Auth0Provider 
+      clientId={ import.meta.env.VITE_AUTH0_DOMAIN } 
+      domain={ import.meta.env.VITE_AUTH0_CLIENT_ID }
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
       <BrowserRouter>
         <PianoApp />
         {/* <App></App> */}
