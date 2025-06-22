@@ -10,7 +10,7 @@ interface AuthState {
   user: User | null
 
   signin: (email: string, password: string) => Promise<boolean>
-  socialSignin: (provider: string) => Promise<boolean>
+  socialSignin: (user: User) => Promise<boolean>
 
   signup: (signupFormData: SignupFormData) => Promise<boolean>
 
@@ -29,7 +29,14 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     return true
   },
 
-  socialSignin: async (provider: string) => {
+  socialSignin: async (user: User) => {
+    await get().currentUser(user)
+
+    if( !user) {
+      await get().currentUser()
+      return false
+    }
+
     return true
   },
   signup: async (signupFormData: SignupFormData) => {
