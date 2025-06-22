@@ -8,7 +8,10 @@ export const SigninPage = () => {
 
   const { initialState, onFormChange } = useForm({ email: '', password: '' })
   
-  const { startGoogleConnection } = useSocialConnections()
+  const { startGoogleConnection, user, isAuthenticated, isLoading } = useSocialConnections()
+
+  console.log({ user, isAuthenticated, isLoading });
+  
 
   return (
     <AuthLayout title="Iniciar Sesion">
