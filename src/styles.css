@@ -83,3 +83,10 @@ button:hover {
   color: black;
   text-decoration: none;
 }
+
+.error-field {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0px;
+  margin-bottom: 8px;
+}
