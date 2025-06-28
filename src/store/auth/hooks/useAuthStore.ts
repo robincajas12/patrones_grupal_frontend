@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import type { User } from "../interfaces/user.interface"
 import { type SignupFormData } from '../interfaces/signup-form-data.interface';
+import { authSignin } from "../actions/auth-actions";
 
 type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated'
 
@@ -26,6 +27,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   user: null,
 
   signin: async (email: string, password: string) => {
+    const user = await authSignin(email, password)
+
+    console.log( user );
+    
     return true
   },
 

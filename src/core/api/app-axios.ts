@@ -8,6 +8,10 @@ const API_URL = STAGE === "prod"
 
 const api = axios.create({
   baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
 })
 
 export { api }

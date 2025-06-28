@@ -8,6 +8,7 @@ import { useSocialConnections } from "../hooks/useSocialConnections"
 import { useAuthStore } from "../../store/auth/hooks/useAuthStore"
 import type { User } from "../../store/auth/interfaces/user.interface"
 import { validateEmail, validatePassword } from "../utils/validate-form-fields"
+import { useSignin } from "../hooks/useSignin"
 
 export const SigninPage = () => {
 
@@ -17,8 +18,9 @@ export const SigninPage = () => {
 
   const [isPasswordValid, setIsPasswordValid] = useState( true )
 
-
   const { socialSignin } = useAuthStore()
+
+  const { onSignin } = useSignin()
   
   const { startGoogleConnection, user: auth0User, isAuthenticated, isLoading } = useSocialConnections()
 
@@ -39,7 +41,7 @@ export const SigninPage = () => {
       return
     }
 
-    console.log(initialState);
+    onSignin(initialState.email, initialState.password)
   }
 
   const onGoogleSignin = async (user?: User) => {
