@@ -1,7 +1,6 @@
 {
   "name": "piano",
   "private": true,
-
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -11,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",

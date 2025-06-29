@@ -35,7 +35,7 @@ return (
      style={{
     ...(pressed && { backgroundColor: color })
     }}    onClick={() => new Audio(song).play()}
-  >{note.replace("b", "#")}</div>
+  ></div>
 );
 
     

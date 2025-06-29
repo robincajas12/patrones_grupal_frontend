@@ -3,10 +3,11 @@ import './App.css'
 import Piano from "./Piano/Piano"
 import { Subject } from 'rxjs'
 import { convertSharpToFlat, type PianoNote } from './Piano/songs';
+import WorkSpace from './Piano/WorkSpace';
 
 
 function App() {
-  const subject = useMemo(() => new Subject<string>(), []);
+ /* const subject = useMemo(() => new Subject<string>(), []);
     const [song, setSong] = useState<PianoNote[] | null>(null);
 
   useEffect(() => {
@@ -39,7 +40,6 @@ function App() {
       await new Promise(resolve => setTimeout(resolve, (entry.duration ? entry.duration : 1) * 1000));
     }
   }
-
   return (
     <div onClick={() => subject.next("")} className="App">
       <div className='btn' onClick={()=>playEstrellita(song)}>play</div>
@@ -47,7 +47,9 @@ function App() {
         <Piano subject={subject}></Piano>
       </div>
     </div>
-  );
+  );*/
+  return  <WorkSpace></WorkSpace>
+  
 }
 
 export default App
