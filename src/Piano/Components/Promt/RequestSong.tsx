@@ -24,7 +24,7 @@ export default function RequestSong({ subject }: RequestSongPros)
             setSong(data);
             console.log("xd")
              subject.next({notes:data, status: 'ready'})
-             setValue('');
+             setValue(' ');
           } catch (error) {
             console.error("Error fetching song:", error);
           }
