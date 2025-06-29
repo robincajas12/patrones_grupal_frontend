@@ -17,9 +17,11 @@ interface AuthState {
 
   logout: () => Promise<void>
 
-  changeStatus: () => Promise<boolean>
+  changeStatus: (user: User | null) => Promise<boolean>
 
-  currentUser: (user?: User) => Promise<void>
+  checkStatus: () => Promise<void>
+
+  currentUser: (user?: User | null) => Promise<boolean>
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
@@ -29,11 +31,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   signin: async (email: string, password: string) => {
     const user = await authSignin(email, password)
 
-    console.log( user );
-    
-    return true
+    return get().changeStatus(user);
   },
-
   socialSignin: async (user: User) => {
     await get().currentUser(user)
 
@@ -45,23 +44,44 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     return true
   },
   signup: async (signupFormData: SignupFormData) => {
+    console.log({signupFormData});
+    
     return true
   },
   logout: async () => {
     set({ status: 'unauthenticated', user: null })
+
+    localStorage.removeItem('user');
   },
-  changeStatus: async () => {
-    await get().currentUser()
-    return true;
-  }
-  ,
-  currentUser: async (user?: User) => {
+  checkStatus: async () => {
+    const userStringified = localStorage.getItem('user');
+
+    const user = userStringified ? JSON.parse(userStringified) : null;
+
+    await get().currentUser(user)
+  },
+  changeStatus: async (user?: User | null) => {
     if(!user) {
-      set({ user: null, status: 'unauthenticated' });
-      return;
+      set({ status: 'unauthenticated', user: null });
+      localStorage.removeItem('user');
+      return false;
     }
 
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    set({ status: 'authenticated', user });
+
+    return true;
+  },
+  currentUser: async (user?: User | null) => {
+    if(!user) {
+      set({ user: null, status: 'unauthenticated' });
+      localStorage.removeItem('user');
+      return false;
+    }
+
+    localStorage.setItem('user', JSON.stringify(user));
     set({ user, status: 'authenticated' });
-    return;
+    return true;
   }
 }))
