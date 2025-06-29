@@ -33,3 +33,14 @@ export const authSocialSignin = async (user: User): Promise<User | null> => {
     return null;
   }
 } 
+
+export const authSignup = async (signupFormData: any): Promise<User | null> => {
+  try {
+    const response = await api.post<User>('/auth/signup', signupFormData)
+
+    return response.data
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

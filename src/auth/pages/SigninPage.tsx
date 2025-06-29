@@ -18,6 +18,8 @@ export const SigninPage = () => {
 
   const [isPasswordValid, setIsPasswordValid] = useState( true )
 
+  const [areCredentialsValid, setAreCredentialsValid] = useState( true )
+
   const { socialSignin } = useAuthStore()
 
   const { onSignin } = useSignin()
@@ -30,18 +32,31 @@ export const SigninPage = () => {
 
   }, [isAuthenticated])
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setAreCredentialsValid(true)
 
-    setIsEmailValid(validateEmail(initialState.email))
+    const emailValidated = validateEmail(initialState.email)
+    const passwordValidated = validatePassword(initialState.password)
 
-    setIsPasswordValid(validatePassword(initialState.password))
+    setIsEmailValid(emailValidated)
 
-    if(!isEmailValid || !isPasswordValid) {
+    setIsPasswordValid(passwordValidated)
+
+    if(!emailValidated || !passwordValidated) {
+      console.log(initialState.email, initialState.password);
+      
       return
     }
 
-    onSignin(initialState.email, initialState.password)
+    const wasSuccessful = await onSignin(initialState.email, initialState.password)
+
+    if(!wasSuccessful) {
+      console.log('error signing in');
+      
+      setAreCredentialsValid(false)
+      return
+    }
   }
 
   const onGoogleSignin = async (user?: User) => {
@@ -80,6 +95,7 @@ export const SigninPage = () => {
             <button type="submit">INICIAR SESION</button>
             <button onClick={startGoogleConnection} type="button">GOOGLE</button>
           </div>
+          {!areCredentialsValid && <p className="error-message">Credenciales incorrectas</p>}
         </form>
 
         <div className="auth-footer">
