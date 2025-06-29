@@ -4,17 +4,21 @@ import { AuthLayout } from "../layout/AuthLayout"
 import { useForm } from "../hooks/useForm"
 import { useState } from "react"
 import { validateEmail, validatePassword } from "../utils/validate-form-fields"
+import { useSignup } from "../hooks/useSignup"
 
 export const SignupPage = () => {
+
+  const { onSignup } = useSignup()
 
   const { initialState, onFormChange } = useForm({ name: '', email: '', password: '' })
 
   const [errors, setErrors] = useState({
     isEmailValid: true,
-    isPasswordValid: true
+    isPasswordValid: true,
+    emailAlreadyExists: false,
   })
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const isEmailValid = validateEmail(initialState.email)
@@ -22,10 +26,22 @@ export const SignupPage = () => {
 
     setErrors({
       isEmailValid,
-      isPasswordValid
+      isPasswordValid,
+      emailAlreadyExists: false
     })
 
     if (!isEmailValid || !isPasswordValid) {
+      return
+    }
+
+    const wasSuccessful = await onSignup(initialState)
+
+    if( !wasSuccessful ) {
+      setErrors({
+        ...errors,
+        emailAlreadyExists: true
+      })
+      
       return
     }
   }
@@ -47,6 +63,7 @@ export const SignupPage = () => {
           </div>
         </form>
 
+        {errors.emailAlreadyExists && <p className="error-message">El correo electrónico ya está en uso</p>}
         <div className="auth-footer">
           <Link className="auth-footer-link" to="/auth/signin">¿Ya tienes una cuenta? Iniciar sesión</Link>
         </div>

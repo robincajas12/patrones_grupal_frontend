@@ -44,16 +44,12 @@ export const SigninPage = () => {
     setIsPasswordValid(passwordValidated)
 
     if(!emailValidated || !passwordValidated) {
-      console.log(initialState.email, initialState.password);
-      
       return
     }
 
     const wasSuccessful = await onSignin(initialState.email, initialState.password)
 
     if(!wasSuccessful) {
-      console.log('error signing in');
-      
       setAreCredentialsValid(false)
       return
     }

@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import type { User } from "../interfaces/user.interface"
 import { type SignupFormData } from '../interfaces/signup-form-data.interface';
-import { authSignin, authSocialSignin } from "../actions/auth-actions";
+import { authSignin, authSignup, authSocialSignin } from "../actions/auth-actions";
 
 type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated'
 
@@ -39,9 +39,9 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     return get().changeStatus(userFromServer);
   },
   signup: async (signupFormData: SignupFormData) => {
-    console.log({signupFormData});
+    const user = await authSignup(signupFormData)
     
-    return true
+    return get().changeStatus(user);
   },
   logout: async () => {
     set({ status: 'unauthenticated', user: null })

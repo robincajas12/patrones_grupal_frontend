@@ -1,4 +1,5 @@
 import { api } from "../../../core/api/app-axios"
+import type { SignupFormData } from "../interfaces/signup-form-data.interface";
 
 import type { User } from "../interfaces/user.interface";
 
@@ -34,7 +35,7 @@ export const authSocialSignin = async (user: User): Promise<User | null> => {
   }
 } 
 
-export const authSignup = async (signupFormData: any): Promise<User | null> => {
+export const authSignup = async (signupFormData: SignupFormData): Promise<User | null> => {
   try {
     const response = await api.post<User>('/auth/signup', signupFormData)
 
