@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import type { User } from "../interfaces/user.interface"
 import { type SignupFormData } from '../interfaces/signup-form-data.interface';
+import { authSignin, authSignup, authSocialSignin } from "../actions/auth-actions";
 
 type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated'
 
@@ -16,9 +17,11 @@ interface AuthState {
 
   logout: () => Promise<void>
 
-  changeStatus: () => Promise<boolean>
+  changeStatus: (user: User | null) => Promise<boolean>
 
-  currentUser: (user?: User) => Promise<void>
+  checkStatus: () => Promise<void>
+
+  currentUser: (user?: User | null) => Promise<boolean>
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
@@ -26,37 +29,54 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   user: null,
 
   signin: async (email: string, password: string) => {
-    return true
+    const user = await authSignin(email, password)
+
+    return get().changeStatus(user);
   },
-
   socialSignin: async (user: User) => {
-    await get().currentUser(user)
+    const userFromServer = await authSocialSignin(user)
 
-    if(!user) {
-      await get().currentUser()
-      return false
-    }
-
-    return true
+    return get().changeStatus(userFromServer);
   },
   signup: async (signupFormData: SignupFormData) => {
-    return true
+    const user = await authSignup(signupFormData)
+    
+    return get().changeStatus(user);
   },
   logout: async () => {
     set({ status: 'unauthenticated', user: null })
+
+    localStorage.removeItem('user');
   },
-  changeStatus: async () => {
-    await get().currentUser()
-    return true;
-  }
-  ,
-  currentUser: async (user?: User) => {
+  checkStatus: async () => {
+    const userStringified = localStorage.getItem('user');
+
+    const user = userStringified ? JSON.parse(userStringified) : null;
+
+    await get().currentUser(user)
+  },
+  changeStatus: async (user?: User | null) => {
     if(!user) {
-      set({ user: null, status: 'unauthenticated' });
-      return;
+      set({ status: 'unauthenticated', user: null });
+      localStorage.removeItem('user');
+      return false;
     }
 
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    set({ status: 'authenticated', user });
+
+    return true;
+  },
+  currentUser: async (user?: User | null) => {
+    if(!user) {
+      set({ user: null, status: 'unauthenticated' });
+      localStorage.removeItem('user');
+      return false;
+    }
+
+    localStorage.setItem('user', JSON.stringify(user));
     set({ user, status: 'authenticated' });
-    return;
+    return true;
   }
 }))

@@ -7,10 +7,10 @@ import App from "../App"
 export const AppRouter = () => {
 
   const status = useAuthStore(( state ) => state.status)
-  const changeStatus = useAuthStore(( state ) => state.changeStatus)
+  const checkStatus = useAuthStore(( state ) => state.checkStatus)
 
   useEffect(() => {
-    changeStatus()
+    checkStatus()
   }, [])
   
   
