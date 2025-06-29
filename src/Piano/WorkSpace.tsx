@@ -3,32 +3,22 @@ import Piano from "./Piano";
 import "./WorkSpace.css";
 import { Subject } from "rxjs";
 import { type PianoNote, convertSharpToFlat } from "./songs";
+import RequestSong, { type RequestSongPros, type RequestSongSubjectProps } from "./Components/Promt/RequestSong";
+import { data } from "react-router-dom";
 export default function WorkSpace()
 {
     const subject = useMemo(() => new Subject<string>(), []);
-    const [song, setSong] = useState<PianoNote[] | null>(null);
+    const songSubject = useMemo(()=> new Subject<RequestSongSubjectProps>(), [])
+    const [song, setSong] = useState<RequestSongSubjectProps>({notes: [], status: 'ready'});
+    useEffect(()=>{
+        const subscription = songSubject.subscribe((res: RequestSongSubjectProps )=>{
+          setSong(res);
+       })
+       return ()=> subscription.unsubscribe();
+    }, [subject])
 
-  useEffect(() => {
-    async function fetchSong() {
-      try {
-        const res = await fetch("/api/create/song", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: "beethoven song" }),
-        });
-        const data: PianoNote[] = await res.json();
-        setSong(data);
-      } catch (error) {
-        console.error("Error fetching song:", error);
-      }
-    }
-
-    fetchSong();
-  }, []); 
-
-
-
-  async function playEstrellita(data : PianoNote[]) {
+  async function playEstrellita(data : PianoNote[] | null) {
+    if(!data) return;
     for (const entry of convertSharpToFlat(data)) {
         for (const n of entry.notes) subject.next(n);
       
@@ -40,8 +30,9 @@ export default function WorkSpace()
             <div>explorer</div>
         </div>
         <div id="chat">
-            <button onClick={()=>song && playEstrellita(song)}>play</button>
-            
+            <RequestSong subject={songSubject}></RequestSong>
+            <button onClick={()=>song && playEstrellita(song.notes)}>play</button>
+            {song == null || song.status == 'loading' && "loading...."}
         </div>
         <div id="piano">
             <div><Piano subject={subject}></Piano></div>

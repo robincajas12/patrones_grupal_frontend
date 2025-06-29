@@ -16,8 +16,8 @@ createRoot(document.getElementById('root')!).render(
       }}
     >
       <BrowserRouter>
-        <PianoApp />
-        {/* <App></App> */}
+        {/*<PianoApp />*/}
+        {<App></App>}
       </BrowserRouter>
     </Auth0Provider>
   </StrictMode>,
