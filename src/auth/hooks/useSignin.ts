@@ -11,8 +11,16 @@ export const useSignin = () => {
     return await signin(email, password);
   };
 
+  // const onSocialSignin = async (email: string, name: string) => {
+  //   if (!email || !name) {
+  //     return false;
+  //   }
+
+  //   return await socialSignin({ email, name });
+  // }
+
   return {
     onSignin,
-    socialSignin,
+    // onSocialSignin,
   };  
 }

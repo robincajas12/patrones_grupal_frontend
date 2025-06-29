@@ -15,5 +15,21 @@ export const authSignin = async (email: string, password: string): Promise<User 
     console.log(error);
     return null;
   }
-
 }
+
+export const authSocialSignin = async (user: User): Promise<User | null> => {
+  const { id, ...restUser } = user
+
+  if(!user || !user.email || !id) {
+    return null
+  }
+
+  try {
+    const response = await api.post<User>('/auth/social/signin', restUser)
+
+    return response.data
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+} 
