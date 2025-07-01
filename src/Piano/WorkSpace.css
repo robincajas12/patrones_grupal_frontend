@@ -1,37 +1,63 @@
-.WorkSpace{
-    display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-areas: 
+.WorkSpace {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
     "explorer chat chat chat"
     "explorer chat chat chat"
     "piano piano piano piano";
-    width: 95vw;
-    height: 90vh;
-    padding: 10px;
+  width: 95vw;
+  height: 90vh;
+  padding: 10px;
+}
+#explorer {
+  grid-area: explorer;
+}
+#chat {
+  grid-area: chat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#piano {
+  grid-area: piano;
+  width: 95vw;
+  height: auto;
+  overflow: auto;
+  overflow-y: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*#piano::-webkit-scrollbar {
+  display: none;
+}*/
 
+.WorkSpace__PlaySong {
+  background-color: rgb(49, 49, 49);
+  display: flex;
+  padding: 1rem;
+  border-radius: 1rem;
 }
-#explorer
-{
-    grid-area: explorer;
+.WorkSpace__PlaySong-title {
+  flex-grow: 1;
 }
-#chat
-{
-     grid-area: chat;
+.WorkSpace__PlaySong button {
+  font-size: 2rem;
+  width: fit-content;
+  background-color: rgba(255, 222, 173, 0);
 }
-#piano
-{
-    grid-area: piano;
-    width: 95vw;
-    height: auto;
-    overflow:auto;
-    overflow-y: hidden;
-    position: relative;  
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.Container {
+  padding: 1rem;
 }
-#piano::-webkit-scrollbar
-{
-    display: none;
+
+h1 {
+  font-size: 3rem;
+}
+
+.Container-Song {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
