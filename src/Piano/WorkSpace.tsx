@@ -66,7 +66,7 @@ export default function WorkSpace() {
       </div>
       <div id="chat">
         <div className="Container-Song">
-            <h1>CrescendoAI</h1>
+            <h1>Crescendo IA</h1>
           
           <RequestSong subject={songSubject}></RequestSong>
           {song &&
