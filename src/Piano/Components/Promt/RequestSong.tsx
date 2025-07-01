@@ -2,7 +2,7 @@ import { useRef, useState, type SetStateAction } from "react"
 import type { PianoNote } from "../../songs";
 import type { Subject } from "rxjs";
 import "./RequestSong.css";
-export interface RequestSongSubjectProps {notes : PianoNote[]|null, status : 'ready'|'loading'}
+export interface RequestSongSubjectProps {name?: string, notes : PianoNote[]|null, status : 'ready'|'loading'}
 export interface RequestSongPros 
 {
     subject : Subject<RequestSongSubjectProps>
@@ -13,17 +13,19 @@ export default function RequestSong({ subject }: RequestSongPros)
     const [value, setValue] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     async function fetchSong(prompt:string) {
+        const user = localStorage.getItem('user'); 
+        if(user == null) return;
           try {
             subject.next({notes:[], status: 'loading'});
             const res = await fetch("/api/song", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ prompt: prompt}),
+              body: JSON.stringify({ prompt: prompt, userId: JSON.parse(user)?.id}),
             });
             const data: PianoNote[] = await res.json();
             setSong(data);
             console.log("xd")
-             subject.next({notes:data, status: 'ready'})
+             subject.next({notes:data, status: 'ready', name: value.substring(0,30)})
              setValue(' ');
           } catch (error) {
             console.error("Error fetching song:", error);

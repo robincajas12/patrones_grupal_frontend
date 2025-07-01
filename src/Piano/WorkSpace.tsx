@@ -9,36 +9,24 @@ type Song = {
   notasMusicales: string;
 };
 
-const songs: Song[] = [
-  {
-    id: 1,
-    nombre: "Imagine",
-    notasMusicales: "C E G A B",
-  },
-  {
-    id: 2,
-    nombre: "Bohemian Rhapsody",
-    notasMusicales: "A C D E F G",
-  },
-  {
-    id: 3,
-    nombre: "Shape of You",
-    notasMusicales: "D F# A B C#",
-  },
-];
 import { type PianoNote, convertSharpToFlat } from "./songs";
 import RequestSong, {
   type RequestSongPros,
   type RequestSongSubjectProps,
 } from "./Components/Promt/RequestSong";
-import { data } from "react-router-dom";
 export default function WorkSpace() {
   const subject = useMemo(() => new Subject<string>(), []);
   const songSubject = useMemo(() => new Subject<RequestSongSubjectProps>(), []);
-  const [song, setSong] = useState<RequestSongSubjectProps>({
-    notes: [],
-    status: "ready",
-  });
+  const [song, setSong] = useState<RequestSongSubjectProps>();
+  const [songs, setSongs] = useState<Song[]>([]);
+  async function getSongs()
+    {
+      const songs : Song[] =  await fetch("/api/song").then(res=>res.json())
+      setSongs(songs)
+    }
+  useEffect(()=>{
+    getSongs();
+  }, [])
   useEffect(() => {
     const subscription = songSubject.subscribe(
       (res: RequestSongSubjectProps) => {
@@ -61,19 +49,16 @@ export default function WorkSpace() {
   return (
     <div className="WorkSpace">
       <div id="explorer">
-        <h2>explorer</h2>
         <div className="MySongs">
-          <h3>My Songs</h3>
+          <div className="MySongs__title">
+                    <h3>My Songs</h3>
+          <div onClick={()=>getSongs()}>♻️</div>
+          </div>
           {songs.map((item) => (
-            <div>
-              <div>{item.nombre}</div>
-            </div>
-          ))}
-        </div>
-        <div className="MyPromps">
-          <h3>My Promts</h3>
-          {songs.map((item) => (
-            <div>
+            <div className="MySongs__item" key={item.id} onClick={()=>{
+              const notes : PianoNote[] = JSON.parse(item.notasMusicales);
+              setSong({notes: notes, status: 'ready', name: item.nombre})
+            }}>
               <div>{item.nombre}</div>
             </div>
           ))}
@@ -81,14 +66,12 @@ export default function WorkSpace() {
       </div>
       <div id="chat">
         <div className="Container-Song">
-          <div className="Title">
-            <h1>CresendoAI</h1>
-          </div>
+            <h1>CrescendoAI</h1>
+          
           <RequestSong subject={songSubject}></RequestSong>
-          {song == null || (song.status == "loading" && "loading....")}
-          {
+          {song &&
             <div className="WorkSpace__PlaySong">
-              <div className="WorkSpace__PlaySong-title">{songs[1].nombre}</div>
+              {songs.length >1 && <div className="WorkSpace__PlaySong-title">{song.status == 'loading' ? song.status+"..." : song.name}</div>}
               <button onClick={() => song && playEstrellita(song.notes)}>
                 ▶️
               </button>

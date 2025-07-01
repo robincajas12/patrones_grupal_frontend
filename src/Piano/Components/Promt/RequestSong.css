@@ -6,11 +6,25 @@
   text-align: center;
   padding: 0;
   height: max-content;
+  border-radius: 0;
+  background-color: rgb(59, 59, 59);
+  border: 1px solid white;
+   border-radius: 0 0.5rem 0.5rem 0;
+  color: white;
+}
+.RequestSongBtn:hover {
+   background-color: rgb(41, 41, 41);
 }
 .RequestSongInput {
   flex: 9;
   text-align: center;
   padding: 0;
+  background-color: rgb(59, 59, 59);
+  color: white;
+  border: none;
+  border-radius: 0;
+  border: 1px solid white;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 .RequestSongForm {
   display: flex;
