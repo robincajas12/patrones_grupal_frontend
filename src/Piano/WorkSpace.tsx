@@ -27,12 +27,14 @@ export default function WorkSpace()
   }
     return <div className="WorkSpace">
         <div id="explorer">
-            <div>explorer</div>
+            <div>
+              <div>Saved Songs</div>
+              <div></div>
+            </div>
         </div>
         <div id="chat">
             <RequestSong subject={songSubject}></RequestSong>
-            <button onClick={()=>song && playEstrellita(song.notes)}>play</button>
-            {song == null || song.status == 'loading' && "loading...."}
+            {song == null || song.status == 'loading' ? "loading...." : <button onClick={()=>song && playEstrellita(song.notes)}>play</button>}
         </div>
         <div id="piano">
             <div><Piano subject={subject}></Piano></div>
