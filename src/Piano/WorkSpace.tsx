@@ -93,7 +93,15 @@ export default function WorkSpace() {
               </button>
             </div>
           }
-            <button onClick={onLogout} style={{ position: 'absolute', width: '10rem', top: '10px', right: '10px' }}>Cerrar Sesion</button>
+            <button onClick={onLogout} style={{ 
+              position: 'absolute', 
+              width: '10rem', 
+              top: '10px', 
+              right: '10px',
+              backgroundColor: '#DC2626',
+            }}>
+              Cerrar Sesion
+            </button>
         </div>
       </div>
       <div id="piano">
