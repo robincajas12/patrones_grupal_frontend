@@ -11,17 +11,35 @@ type Song = {
 
 import { type PianoNote, convertSharpToFlat } from "./songs";
 import RequestSong, {
-  type RequestSongPros,
   type RequestSongSubjectProps,
 } from "./Components/Promt/RequestSong";
+import { useAuthStore } from "../store/auth/hooks/useAuthStore";
+import { useAuth0 } from "@auth0/auth0-react";
 export default function WorkSpace() {
   const subject = useMemo(() => new Subject<string>(), []);
   const songSubject = useMemo(() => new Subject<RequestSongSubjectProps>(), []);
   const [song, setSong] = useState<RequestSongSubjectProps>();
   const [songs, setSongs] = useState<Song[]>([]);
+
+  const { user, logout: storeLogout } = useAuthStore()
+
+  const { logout } = useAuth0()
+
+  const onLogout = async () => {
+    localStorage.setItem('auth0-redirect', 'true')
+
+    await storeLogout();
+
+    await logout({
+      // logoutParams: {
+      //   returnTo: window.location.origin,
+      // }
+    })
+  }
+
   async function getSongs()
     {
-      const songs : Song[] =  await fetch("/api/song").then(res=>res.json())
+      const songs : Song[] =  await fetch(`/api/song?id=${user?.id}`).then(res=>res.json())
       setSongs(songs)
     }
   useEffect(()=>{
@@ -77,6 +95,7 @@ export default function WorkSpace() {
               </button>
             </div>
           }
+            <button onClick={onLogout} style={{ position: 'absolute', width: '10rem', top: '10px', right: '10px' }}>Cerrar Sesion</button>
         </div>
       </div>
       <div id="piano">

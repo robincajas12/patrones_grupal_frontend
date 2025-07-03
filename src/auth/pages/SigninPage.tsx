@@ -27,6 +27,16 @@ export const SigninPage = () => {
   const { startGoogleConnection, user: auth0User, isAuthenticated, isLoading } = useSocialConnections()
 
   useEffect(() => {
+    const isLogginOut = localStorage.getItem('auth0-redirect')
+
+    if(isLogginOut) {
+      localStorage.removeItem('auth0-redirect')
+      return
+    }
+
+    if(!isAuthenticated || !auth0User) {
+      return
+    }
 
     onGoogleSignin({ email: auth0User?.email || '', name: auth0User?.name || '', id: auth0User?.sub || '' })
 
