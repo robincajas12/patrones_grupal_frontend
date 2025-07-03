@@ -21,20 +21,18 @@ export default function WorkSpace() {
   const [song, setSong] = useState<RequestSongSubjectProps>();
   const [songs, setSongs] = useState<Song[]>([]);
 
-  const { user, logout: storeLogout } = useAuthStore()
+  const {user, logout: storeLogout } = useAuthStore()
 
-  const { logout } = useAuth0()
+  const { logout, isAuthenticated } = useAuth0()
 
   const onLogout = async () => {
     localStorage.setItem('auth0-redirect', 'true')
 
     await storeLogout();
 
-    await logout({
-      // logoutParams: {
-      //   returnTo: window.location.origin,
-      // }
-    })
+    if(isAuthenticated) {
+      await logout({})
+    }
   }
 
   async function getSongs()
